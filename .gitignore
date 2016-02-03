@@ -1,2 +1,5 @@
-*.iml
 .vagrant
+devbox.yaml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/*

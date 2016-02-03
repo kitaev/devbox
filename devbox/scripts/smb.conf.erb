@@ -1,0 +1,33 @@
+[global]
+   workgroup = <%= yaml.get('samba.global.workgroup', 'WORKGROUP') %>
+   server string = <%= yaml.get('samba.global.name', 'devbox') %>
+   netbios name = <%= yaml.get('samba.global.netbios', 'DEVBOX') %>
+
+   interfaces = eth1 lo
+   security = user
+   dns proxy = no
+
+   server role = standalone server
+
+   map to guest = bad user
+   usershare allow guests = yes
+   wide links = yes
+   allow insecure wide links = yes
+   unix extensions = no
+
+   load printers = no
+   printing = bsd
+   printcap name = /dev/null
+   disable spoolss = yes
+
+[<%= yaml.get('samba.share.name', 'share') %>]
+   comment = <%= yaml.get('samba.share.comment', 'Public Share') %>
+   path = <%= yaml.get('samba.share.path', '/mnt/share') %>
+   guest only = yes
+   guest ok = yes
+   browsable = yes
+   create mask = 0644
+   directory mask = 0755
+   force group = <%= yaml.get('samba.share.user', 'vagrant') %>
+   force user = <%= yaml.get('samba.share.group', 'vagrant') %>
+   writable = yes

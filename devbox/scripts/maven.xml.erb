@@ -1,0 +1,68 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <servers>
+    <% yaml.get('maven.servers', []).each do |server| %>
+    <server>
+      <id><%= server['id'] %></id>
+      <% unless server['user'].nil? %><username><%= server['user'] %></username><% end %>
+      <% unless server['password'].nil? %><password><%= server['password'] %></password><% end %>
+    </server>
+    <% end %>
+  </servers>
+
+  <profiles>
+    <profile>
+      <id>vagrant</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+
+      <repositories>
+        <% yaml.get('maven.repositories', []).each do |repository| %>
+        <repository>
+          <id><%= repository['id'] %></id>
+          <% unless repository['url'].nil? %><url><%= repository['url'] %></url><% end %>
+          <% unless repository['name'].nil? %><name><%= repository['name'] %></name><% end %>
+          <snapshots>
+            <% snapshots = repository['snapshots'].nil? ? { 'enabled' => 'true' } : repository['snapshots'] %>
+            <enabled><%= snapshots['enabled'].nil? ? 'false' : snapshots['enabled'] %></enabled>
+            <updatePolicy>always</updatePolicy>
+            <checksumPolicy>warn</checksumPolicy>
+          </snapshots>
+          <releases>
+            <% releases = repository['releases'].nil? ? { 'enabled' => 'true' } : repository['releases'] %>
+            <enabled><%= releases['enabled'].nil? ? 'false' : releases['enabled'] %></enabled>
+            <updatePolicy>always</updatePolicy>
+            <checksumPolicy>warn</checksumPolicy>
+          </releases>
+        </repository>
+        <% end %>
+      </repositories>
+
+      <pluginRepositories>
+        <% yaml.get('maven.pluginRepositories', []).each do |repository| %>
+        <pluginRepository>
+          <id><%= repository['id'] %></id>
+          <% unless repository['url'].nil? %><url><%= repository['url'] %></url><% end %>
+          <% unless repository['name'].nil? %><name><%= repository['name'] %></name><% end %>
+          <snapshots>
+            <% snapshots = repository['snapshots'].nil? ? { 'enabled' => 'true' } : repository['snapshots'] %>
+            <enabled><%= snapshots['enabled'].nil? ? 'false' : snapshots['enabled'] %></enabled>
+            <updatePolicy>always</updatePolicy>
+            <checksumPolicy>warn</checksumPolicy>
+          </snapshots>
+          <releases>
+            <% releases = repository['releases'].nil? ? { 'enabled' => 'true' } : repository['releases'] %>
+            <enabled><%= releases['enabled'].nil? ? 'false' : releases['enabled'] %></enabled>
+            <updatePolicy>always</updatePolicy>
+            <checksumPolicy>warn</checksumPolicy>
+          </releases>
+        </pluginRepository>
+        <% end %>
+      </pluginRepositories>
+
+    </profile>
+  </profiles>
+</settings>

@@ -1,0 +1,23 @@
+vm:
+  box: debian/jessie64
+  box_check_update: false
+  hostname: devbox
+  ip: 192.168.9.10
+  memory: 4096
+  cpus: 1
+
+git:
+  user.name: Ivan Toropyzhkin
+  user.email: ivan@toropyzhk.in
+
+samba:
+  global:
+    workgroup: WORKGROUP
+    name: devbox
+    netbios: DEVBOX
+  share:
+    comment: devbox
+    name: share
+    path: /mnt/share
+    user: vagrant
+    group: vagrant
